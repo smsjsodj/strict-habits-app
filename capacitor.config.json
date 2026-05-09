@@ -1,5 +1,5 @@
-{
-  "appId": "com.yourcompany.stricthabits",
-  "appName": "Strict Habits",
-  "webDir": "dist"
-}
+{ 
+  "appId": "com.yourcompany.stricthabits", 
+  "appName": "Strict Habits", 
+  "webDir": "dist" 
+} 
