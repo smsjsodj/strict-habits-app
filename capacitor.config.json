@@ -1,5 +1,9 @@
-{ 
-  "appId": "com.yourcompany.stricthabits", 
-  "appName": "Strict Habits", 
-  "webDir": "dist" 
-} 
+{
+  "appId": "com.stricthabits.app",
+  "appName": "Strict Habits",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
