@@ -916,4 +916,4 @@ export default function StrictHabitTracker() {
       </div>
     </div>
   );
-}d
+}
