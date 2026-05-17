@@ -193,15 +193,13 @@ export default function StrictHabitTracker() {
   };
 
   const handleUnlock = () => {
-    if (confirmText.toLowerCase() === 'я клянусь жопой') {
-      if (currentHabit.useTelegramUnlock) {
-        alert('⚠️ Эта привычка требует разблокировки через Telegram бота!\nОтправь команду /unlock в бот.');
-      } else {
-        completeHabit();
-      }
-    } else {
-      alert('❌ Неправильная фраза! Напиши точно: "Я клянусь жопой"');
+    // If this habit requires Telegram unlock, instruct the user.
+    if (currentHabit?.useTelegramUnlock) {
+      alert('⚠️ Эта привычка требует разблокировки через Telegram бота!\nОтправь команду /unlock в бот.');
+      return;
     }
+    // For regular (non-Telegram) locks, unlock immediately via the button.
+    completeHabit();
   };
 
   const completeHabit = () => {
@@ -359,22 +357,29 @@ export default function StrictHabitTracker() {
             >
               ✓ Я ТУТ
             </button>
+          ) : currentHabit?.useTelegramUnlock ? (
+            <div>
+              <div style={{
+                width: '100%', padding: '20px', fontSize: '18px', borderRadius: '10px',
+                border: '3px solid white', marginBottom: '15px', textAlign: 'center',
+                background: 'white', color: '#1f2937', fontWeight: 'bold'
+              }}>
+                🔐 Эта привычка требует разблокировки через Telegram. Отправь команду /unlock в бота.
+              </div>
+              <button
+                onClick={completeHabit}
+                style={{
+                  width: '100%', padding: '15px', fontSize: '14px', background: 'rgba(255,255,255,0.3)',
+                  color: 'white', border: '2px solid white', borderRadius: '8px', marginTop: '15px', cursor: 'pointer'
+                }}
+              >
+                📱 Симуляция: Telegram /unlock
+              </button>
+            </div>
           ) : (
             <div>
-              <input
-                type="text"
-                value={confirmText}
-                onChange={(e) => setConfirmText(e.target.value)}
-                placeholder='Напиши: "Я клянусь жопой"'
-                style={{
-                  width: '100%', padding: '20px', fontSize: '18px', borderRadius: '10px',
-                  border: '3px solid white', marginBottom: '15px', textAlign: 'center',
-                  background: 'white', color: '#1f2937', fontWeight: 'bold'
-                }}
-                onKeyPress={(e) => e.key === 'Enter' && handleUnlock()}
-              />
               <button
-                onClick={handleUnlock}
+                onClick={completeHabit}
                 style={{
                   width: '100%', padding: '20px', fontSize: '24px', fontWeight: 'bold',
                   background: 'white', color: '#dc2626', border: 'none', borderRadius: '10px',
@@ -383,17 +388,6 @@ export default function StrictHabitTracker() {
               >
                 🔓 РАЗБЛОКИРОВАТЬ
               </button>
-              {currentHabit?.useTelegramUnlock && (
-                <button
-                  onClick={completeHabit}
-                  style={{
-                    width: '100%', padding: '15px', fontSize: '14px', background: 'rgba(255,255,255,0.3)',
-                    color: 'white', border: '2px solid white', borderRadius: '8px', marginTop: '15px', cursor: 'pointer'
-                  }}
-                >
-                  📱 Симуляция: Telegram /unlock
-                </button>
-              )}
             </div>
           )}
         </div>
